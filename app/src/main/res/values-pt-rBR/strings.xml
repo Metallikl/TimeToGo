@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TimeToGo</string>
+    <string name="time_counter">Contador</string>
+    <string name="work_time">Jornada de trabalho:</string>
+    <string name="lunch_interval">Intervalo de almoço:</string>
+    <string name="calculated_time_to_go">Hora prevista para sair</string>
+    <string name="real_worked_time">Tempo trabalhado</string>
+    <string name="end_time">Saída: </string>
+    <string name="initial_time">Entrada:</string>
+</resources>

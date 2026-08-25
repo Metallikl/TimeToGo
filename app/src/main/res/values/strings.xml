@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">TimeToGo</string>
+    <string name="time_counter">Time Counter</string>
+    <string name="work_time">Work Time:</string>
+    <string name="lunch_interval">Lunch interval:</string>
+    <string name="calculated_time_to_go">Estimated Departure Time</string>
+    <string name="real_worked_time">Real worked time</string>
+    <string name="end_time">Departure Time:</string>
+    <string name="initial_time">Start Time:</string>
 </resources>
