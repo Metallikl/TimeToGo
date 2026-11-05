@@ -2,16 +2,23 @@ package com.dluche.timetogo.ui.feature.timecounter.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.dluche.timetogo.data.PreferenceManager
+import com.dluche.timetogo.data.datastore.DataStoreKeys.PREFERENCE_LUNCH_INTERVAL
+import com.dluche.timetogo.data.datastore.DataStoreKeys.PREFERENCE_WORK_TIME
 import com.dluche.timetogo.ui.feature.timecounter.events.TimeCounterEvents
 import com.dluche.timetogo.ui.feature.timecounter.state.TimeCounterState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
 import java.util.Locale
 
 @KoinViewModel
-class TimeCounterViewModel: ViewModel() {
+class TimeCounterViewModel(
+    private val preferenceManager: PreferenceManager
+): ViewModel() {
     val TAG = "TimeCounterViewModel"
     init {
         Log.d(TAG, "chamou init': ")
@@ -35,11 +42,31 @@ class TimeCounterViewModel: ViewModel() {
         ))
 
     fun dispatchEvent(event: TimeCounterEvents){
-        when(event){
+        when(event) {
             is TimeCounterEvents.UpdateEndTime -> updateEndTime(event.endTime)
             is TimeCounterEvents.UpdateInitialTime -> updateInitialTime(event.initialTime)
             is TimeCounterEvents.UpdateLunchInterval -> updateLunchTime(event.interval)
             is TimeCounterEvents.UpdateWorkTime -> updateWorkTime(event.time)
+            TimeCounterEvents.SaveSettings -> saveSettings()
+            TimeCounterEvents.LoadSettings -> loadSettings()
+        }
+    }
+
+    private fun loadSettings() {
+        viewModelScope.launch {
+            preferenceManager.getData(PREFERENCE_WORK_TIME)?.let{
+                updateWorkTime(it)
+            }
+            preferenceManager.getData(PREFERENCE_LUNCH_INTERVAL)?.let {
+                updateLunchTime(it)
+            }
+        }
+    }
+
+    private fun saveSettings() {
+        viewModelScope.launch {
+            preferenceManager.saveData(PREFERENCE_WORK_TIME, state.value.workTime)
+            preferenceManager.saveData(PREFERENCE_LUNCH_INTERVAL, state.value.lunchInterval)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.dluche.timetogo.ui.feature.timecounter.di
+package com.dluche.timetogo.di
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module

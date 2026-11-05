@@ -5,4 +5,7 @@ sealed interface TimeCounterEvents {
     data class UpdateEndTime(val endTime: String) : TimeCounterEvents
     data class UpdateLunchInterval(val interval: String) : TimeCounterEvents
     data class UpdateWorkTime(val time: String) : TimeCounterEvents
+
+    data object SaveSettings : TimeCounterEvents
+    data object LoadSettings : TimeCounterEvents
 }
