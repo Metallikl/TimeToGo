@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.dluche.timetogo.data.PreferenceManager
 import com.dluche.timetogo.data.datastore.DataStoreKeys.PREFERENCE_LUNCH_INTERVAL
 import com.dluche.timetogo.data.datastore.DataStoreKeys.PREFERENCE_WORK_TIME
+import com.dluche.timetogo.domain.repository.OpenStreetMapRepository
 import com.dluche.timetogo.ui.feature.timecounter.events.TimeCounterEvents
 import com.dluche.timetogo.ui.feature.timecounter.state.TimeCounterState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import java.util.Locale
 
 @KoinViewModel
 class TimeCounterViewModel(
-    private val preferenceManager: PreferenceManager
+    private val preferenceManager: PreferenceManager,
+    private val repository: OpenStreetMapRepository
 ): ViewModel() {
     val TAG = "TimeCounterViewModel"
     init {
@@ -60,6 +62,8 @@ class TimeCounterViewModel(
             preferenceManager.getData(PREFERENCE_LUNCH_INTERVAL)?.let {
                 updateLunchTime(it)
             }
+
+            repository.searchAddress("rua okinawa,santo andré")
         }
     }
 
